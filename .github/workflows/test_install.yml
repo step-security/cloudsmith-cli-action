@@ -1,0 +1,32 @@
+name: "Test Cloudsmith CLI Installer"
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Check for dist drift
+        run: |
+          if ! git diff --quiet dist/; then
+            echo "::error::dist/ is out of sync with src/. Run 'npm run build' and commit the result."
+            git diff --stat dist/
+            exit 1
+          fi
