@@ -1,0 +1,18 @@
+{
+   "schema_version": "1",
+   "onboarding_type": "copied",
+   "archived": false,
+   "maintained_action_name": "step-security/cloudsmith-cli-action",
+   "upstream_full_repo_name": "cloudsmith-io/cloudsmith-cli-action",
+   "action_type": "node",
+   "last_release": {
+     "tag_name": "v2.0.3",
+     "created_at": "2026-06-18T10:11:51Z",
+     "published_at": "2026-06-18T15:48:54Z"
+   },
+   "sync": {
+     "ignore_presets": [
+       "defaults_v1"
+     ]
+   }
+ }
