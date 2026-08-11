@@ -17,7 +17,7 @@
     "axios": "^1.16.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.1",
+    "@vercel/ncc": "^0.44.1",
     "eslint": "^9.37.0"
   }
 }
