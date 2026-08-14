@@ -1,64 +1,64 @@
-name: Cloudsmith CLI Setup
-description: "Install the standalone Cloudsmith CLI in GitHub Actions and configure API key or OIDC authentication. No Python or Node.js required. Secure drop-in replacement for cloudsmith-io/cloudsmith-cli-action."
-author: 'step-security'
+name: "Cloudsmith CLI Setup"
+description: "Install the standalone Cloudsmith CLI and configure API key or OIDC authentication. No Python or Node.js required."
+author: "step-security"
 
 branding:
-  icon: 'box'
-  color: 'blue'
+  icon: "box"
+  color: "blue"
 
 inputs:
   cli-version:
     description: "Cloudsmith CLI version to install, for example '1.20.0', or 'latest'."
     required: false
-    default: 'latest'
+    default: "latest"
   install-directory:
     description: "Root directory for versioned CLI installations. Defaults to RUNNER_TEMP/cloudsmith-cli."
     required: false
-    default: ''
+    default: ""
   api-key:
-    description: 'API Key for Cloudsmith. Prefer OIDC for CI/CD workloads.'
+    description: "Cloudsmith API key. Prefer OIDC for CI/CD workloads."
     required: false
-    default: ''
+    default: ""
   oidc-namespace:
-    description: 'Cloudsmith organisation/namespace for OIDC authentication.'
+    description: "Cloudsmith organisation/namespace for OIDC authentication."
     required: false
-    default: ''
+    default: ""
   oidc-service-slug:
-    description: 'Cloudsmith service account slug for OIDC authentication.'
+    description: "Cloudsmith service account slug for OIDC authentication."
     required: false
-    default: ''
-  oidc-auth-only:
-    description: "Deprecated alias for export-auth-token. When true, it enables the same CLI credential-helper flow."
-    required: false
-    default: 'false'
+    default: ""
   oidc-audience:
     description: "Audience to request for the GitHub OIDC token. Defaults to https://github.com/{repository-owner}."
     required: false
-    default: ''
+    default: ""
+  api-host:
+    description: "API host override for Cloudsmith."
+    required: false
+    default: ""
+  api-proxy:
+    description: "API proxy for Cloudsmith."
+    required: false
+    default: ""
+  api-ssl-verify:
+    description: "Verify SSL certificates for the Cloudsmith API: true, false, or empty for the CLI default."
+    required: false
+    default: ""
+  api-user-agent:
+    description: "User agent override for the Cloudsmith API."
+    required: false
+    default: ""
   verify-auth:
     description: "Run 'cloudsmith whoami' after setup to verify authentication."
     required: false
-    default: 'false'
+    default: "false"
   export-auth-token:
     description: "Resolve credentials with 'cloudsmith credential-helper generic', then export its password as CLOUDSMITH_API_KEY and username as CLOUDSMITH_USERNAME. Requires Cloudsmith CLI 1.21.0 or later."
     required: false
-    default: 'false'
-  api-host:
-    description: 'API host override for Cloudsmith.'
+    default: "false"
+  oidc-auth-only:
+    description: "Deprecated alias for export-auth-token. When true, it enables the same CLI credential-helper flow."
     required: false
-    default: ''
-  api-proxy:
-    description: 'API proxy for Cloudsmith.'
-    required: false
-    default: ''
-  api-ssl-verify:
-    description: 'Verify SSL certificates for the Cloudsmith API: true, false, or empty for the CLI default.'
-    required: false
-    default: ''
-  api-user-agent:
-    description: 'User agent override for the Cloudsmith API.'
-    required: false
-    default: ''
+    default: "false"
 
 outputs:
   cli-version:
@@ -81,6 +81,7 @@ runs:
   using: "composite"
   steps:
     - name: Subscription check
+      shell: bash
       env:
         REPO_PRIVATE: ${{ github.event.repository.private }}
       run: |
@@ -123,7 +124,7 @@ runs:
             exit 1
           fi
         fi
-      shell: bash
+
     - name: Install and configure Cloudsmith CLI
       id: setup-posix
       if: runner.os != 'Windows'
