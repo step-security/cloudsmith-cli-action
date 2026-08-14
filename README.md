@@ -1,6 +1,6 @@
 [![StepSecurity Maintained Action](https://raw.githubusercontent.com/step-security/maintained-actions-assets/main/assets/maintained-action-banner.png)](https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions)
 
-# Cloudsmith CLI Install Action
+# Cloudsmith CLI Setup Action
 
 [![Latest release](https://img.shields.io/github/v/release/step-security/cloudsmith-cli-action)](https://github.com/step-security/cloudsmith-cli-action/releases)
 [![License](https://img.shields.io/github/license/step-security/cloudsmith-cli-action)](LICENSE)
@@ -218,7 +218,7 @@ The action no longer writes a configuration file. Values supplied through `api-h
 
 ## Support
 
-If you have any questions or need further assistance, please open an issue on GitHub. Alternatively, you can contact us at [support.cloudsmith.com](https://support.cloudsmith.com/).
+If you have any questions or need further assistance, please open an issue on GitHub.
 
 ## License
 
