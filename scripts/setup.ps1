@@ -35,7 +35,9 @@ if (-not [string]::IsNullOrEmpty($env:INPUT_OIDC_AUDIENCE) -and -not $hasOidcNam
   throw "oidc-audience requires oidc-namespace and oidc-service-slug"
 }
 
-if ($hasOidcNamespace -and [string]::IsNullOrEmpty($env:ACTIONS_ID_TOKEN_REQUEST_URL)) {
+# A supplied API key takes precedence over OIDC, so it must not require
+# the workflow to grant an otherwise unused id-token permission.
+if ($hasOidcNamespace -and -not $hasApiKey -and [string]::IsNullOrEmpty($env:ACTIONS_ID_TOKEN_REQUEST_URL)) {
   throw "OIDC authentication requires an ID token. Add 'permissions: id-token: write' to your workflow or job."
 }
 
@@ -135,7 +137,7 @@ if ($hasOidcNamespace) {
     $audience = "https://github.com/$($env:GITHUB_REPOSITORY_OWNER)"
   }
 
-  Write-JobEnvironment -Name CLOUDSMITH_ORG -Value $env:INPUT_OIDC_NAMESPACE
+  Write-JobEnvironment -Name CLOUDSMITH_WORKSPACE -Value $env:INPUT_OIDC_NAMESPACE
   Write-JobEnvironment -Name CLOUDSMITH_SERVICE_SLUG -Value $env:INPUT_OIDC_SERVICE_SLUG
   Write-JobEnvironment -Name CLOUDSMITH_OIDC_AUDIENCE -Value $audience
 }
@@ -149,15 +151,15 @@ if (-not [string]::IsNullOrEmpty($apiHost)) {
   Write-JobEnvironment -Name CLOUDSMITH_API_HOST -Value $apiHost
 }
 if (-not [string]::IsNullOrEmpty($env:INPUT_API_PROXY)) {
-  Write-JobEnvironment -Name CLOUDSMITH_API_PROXY -Value $env:INPUT_API_PROXY
+  Write-JobEnvironment -Name CLOUDSMITH_PROXY -Value $env:INPUT_API_PROXY
 }
 if (-not [string]::IsNullOrEmpty($env:INPUT_API_USER_AGENT)) {
   Write-JobEnvironment -Name CLOUDSMITH_API_USER_AGENT -Value $env:INPUT_API_USER_AGENT
 }
 
 switch ($apiSslVerify) {
-  'true' { Write-JobEnvironment -Name CLOUDSMITH_WITHOUT_API_SSL_VERIFY -Value 'false' }
-  'false' { Write-JobEnvironment -Name CLOUDSMITH_WITHOUT_API_SSL_VERIFY -Value 'true' }
+  'true' { Write-JobEnvironment -Name CLOUDSMITH_SSL_VERIFY -Value 'true' }
+  'false' { Write-JobEnvironment -Name CLOUDSMITH_SSL_VERIFY -Value 'false' }
 }
 
 $exportedToken = ''

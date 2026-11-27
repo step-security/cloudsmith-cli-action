@@ -17,7 +17,7 @@ The action does not require Python or Node.js on the runner.
 | Runners | Linux, macOS, and Windows |
 | Architectures | x86-64, plus Linux and macOS ARM64 |
 | Runtime dependencies | No Python or Node.js; `export-auth-token` additionally uses `jq` on Linux and macOS |
-| Version selection | Latest release or a specific CLI version |
+| Version selection | A CLI version pinned by each action release, a specific CLI version, or the latest release |
 
 ## Quick start
 
@@ -89,7 +89,7 @@ An authentication method is required: provide `api-key`, or provide both `oidc-n
 
 | Input | Description | Required | Default |
 | --- | --- | --- | --- |
-| `cli-version` | CLI version to install, such as `1.20.0` | No | `latest` |
+| `cli-version` | CLI version to install, such as `1.20.0`, or `latest` | No | The CLI version that the action release pins |
 | `install-directory` | Root directory for versioned CLI installations | No | `RUNNER_TEMP/cloudsmith-cli` |
 | `verify-auth` | Run `cloudsmith whoami` after setup | No | `false` |
 
@@ -143,13 +143,13 @@ The action configures later steps by exporting the environment variables that co
 | Input | Environment variable |
 | --- | --- |
 | `api-key` | `CLOUDSMITH_API_KEY` |
-| `oidc-namespace` | `CLOUDSMITH_ORG` |
+| `oidc-namespace` | `CLOUDSMITH_WORKSPACE` |
 | `oidc-service-slug` | `CLOUDSMITH_SERVICE_SLUG` |
 | `oidc-audience` | `CLOUDSMITH_OIDC_AUDIENCE` |
 | `api-host` | `CLOUDSMITH_API_HOST` |
-| `api-proxy` | `CLOUDSMITH_API_PROXY` |
+| `api-proxy` | `CLOUDSMITH_PROXY` |
 | `api-user-agent` | `CLOUDSMITH_API_USER_AGENT` |
-| `api-ssl-verify` | `CLOUDSMITH_WITHOUT_API_SSL_VERIFY` |
+| `api-ssl-verify` | `CLOUDSMITH_SSL_VERIFY` |
 | `export-auth-token` | `CLOUDSMITH_API_KEY` (effective credential) and `CLOUDSMITH_USERNAME` (`token`) |
 
 ## Publish a package
