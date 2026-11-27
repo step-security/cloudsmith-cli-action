@@ -1,0 +1,12 @@
+{
+  "$comment": "Managed automatically when syncing with upstream. Do not edit by hand.",
+  "schema_version": 1,
+  "onboarding_type": "copied",
+  "action_type": "composite",
+  "upstream": {
+    "repository": "cloudsmith-io/cloudsmith-cli-action",
+    "synced_tag": "v3.3.1",
+    "synced_commit": "43ad6309c0e532af72d816fb256fa2f3161f765a",
+    "archived": false
+  }
+}
